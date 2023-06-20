@@ -57,25 +57,26 @@ load.fontawesome <- function(font = "fa-solid-900.ttf") {
 ##' @importFrom utils read.delim
 get_fontawesome_data <- function() {
     ## copy font table from:
-    ## https://fortawesome.github.io/Font-Awesome/cheatsheet/
-    y <- read.delim(pipe("pbpaste"), stringsAsFactors=F)
-    fa <- gsub("(.*)fa.*", '\\1', y[,1])
-    html <- gsub(".*\\[(.*)\\].*",'\\1', y)
+    ## https://fontawesome.com/v5/cheatsheet/free/brands
+    y <- read.delim("inst/fonts/v5_cheatsheet.txt", stringsAsFactors=F)
+    colnames(y) <- c("fa", "aliases", "html")
 
-    aliases <- gsub(".*(fa.*)\\s+.*", '\\1', y)
-
-    fontawesome_data <- data.frame(fa=fa, aliases=aliases, html=html, stringsAsFactors=FALSE)
-    return(fontawesome_data)
+    y$aliases <- paste0("fa-", y$aliases)
+    y$html <- paste0("&#x", y$html, ";")
+  
+    return(y)
 }
 
+# fontawesome_data <- get_fontawesome_data()
+# usethis::use_data(fontawesome_data, internal = TRUE, overwrite = T)
 
 ## example
-## library(emojifont)
-## load.fontawesome()
-## set.seed(123)
-## d = data.frame(x=rnorm(20),
-##                y=rnorm(20),
-##                z=sample(fontawesome(c('fa-weibo','fa-github', 'fa-twitter', 'fa-apple')), replace=T, 10))
-
-## library(ggplot2)
-## ggplot(d, aes(x, y, color=z)) + geom_text(aes(label=z), family='fontawesome-webfont', size=8)
+# library(emojifont)
+# load.fontawesome()
+# set.seed(123)
+# d = data.frame(x=rnorm(20),
+#                y=rnorm(20),
+#                z=sample(fontawesome(c('fa-route','fa-flag', 'fa-arrow-trend-up')), replace=T, 10))
+# 
+# library(ggplot2)
+# ggplot(d, aes(x, y, color=z)) + geom_text(aes(label=z), family='fa-solid-900', size=8)
