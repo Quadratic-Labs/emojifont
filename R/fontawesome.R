@@ -49,7 +49,7 @@ fontawesome <- function(aliases) {
 ##' @return NULL
 ##' @export
 ##' @author ygc
-load.fontawesome <- function(font = "fontawesome-webfont.ttf") {
+load.fontawesome <- function(font = "fa-solid-900.ttf") {
     efproto$load_font(font=font, type='fontawesome')
 }
 
